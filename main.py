@@ -10,9 +10,8 @@ import numpy
 import time
 import numpy as np
 
-# os.environ['OMP_NUM_THREADS'] = '1'
 
-N = 2
+N = 1024
 
 
 def matrix_multiply():
@@ -27,7 +26,7 @@ def matrix_multiply():
         FLOPS = N * N * (2 * N)
         s = t1 - t0
 
-        print(f"GFLOP/S: {FLOPS / s * 1e-9}, {s*1e3:.2f} ms")
+        print(f"GFLOP/S: {(FLOPS / s) * 1e-9}, {s*1e3:.2f} ms")
         np.savetxt('A.txt',A, fmt='%.7f')
         np.savetxt('B.txt',B, fmt='%.7f')
         np.savetxt('C.txt',C, fmt='%.7f')
