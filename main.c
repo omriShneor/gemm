@@ -27,7 +27,7 @@ double** load_mat(char* file_name) {
     return mat;
 }
 
-double** naive_matmul(double** A, double** B) {
+double** matmul(double** A, double** B) {
     /*Allocate N rows*/
     double** mat= malloc(N*sizeof(double*));
     
@@ -35,13 +35,16 @@ double** naive_matmul(double** A, double** B) {
     for(int i=0;i<N;++i)
         mat[i]=malloc(N*sizeof(double));
 
-        for(int i = 0; i < N; ++i) {
-            for(int k = 0; k < N; ++k) {
-                for(int j = 0; j < N; ++j) {
-                    mat[i][j] += A[i][k] * B[k][j];
-                }
+
+    // Compute Matmul
+    for(int i = 0; i < N; ++i) {
+        for(int j=0; j < N; ++j){
+            mat[i][j] = 0;
+            for(int k = 0; k < N; ++k){
+                mat[i][j] += A[i][k] * B[k][j];
             }
         }
+    }
     return mat;
 }
 
@@ -69,11 +72,11 @@ int main(int argc, char** argv) {
     double** C = load_mat("C.txt");
 
     clock_t t1 = clock();
-    double** res = naive_matmul(A, B);
+    double** res = matmul(A, B);
     clock_t t2 = clock();
     double s = (double)(t2 - t1) / CLOCKS_PER_SEC;
     double GFLOPS = (N * N * 2.0 * N)*1e-9;
-    printf("GFLOP/S: %lf, ms: %lf ms\n", GFLOPS/s, s*1e3);
+    printf("GFLOP/S: %lf, %lf ms\n", GFLOPS/s, s*1e3);
     compare_matmul(res, C);
     free(A);
     free(B);

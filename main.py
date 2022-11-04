@@ -1,12 +1,9 @@
 import os
 
-import os
-os.environ["MKL_NUM_THREADS"] = "1" 
-os.environ["NUMEXPR_NUM_THREADS"] = "1" 
-os.environ["OMP_NUM_THREADS"] = "1" 
+# os.environ["MKL_NUM_THREADS"] = "1" 
+# os.environ["NUMEXPR_NUM_THREADS"] = "1" 
+# os.environ["OMP_NUM_THREADS"] = "1" 
 
-
-import numpy
 import time
 import numpy as np
 
@@ -16,8 +13,8 @@ N = 1024
 
 def matrix_multiply():
     for _ in range(1):
-        A = numpy.random.randn(N, N).astype(numpy.float32)
-        B = numpy.random.randn(N, N).astype(numpy.float32)
+        A = np.random.randn(N, N).astype(np.float32)
+        B = np.random.randn(N, N).astype(np.float32)
 
         t0 = time.monotonic()
         C = A @ B
