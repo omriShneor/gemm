@@ -26,12 +26,12 @@ def parse_args():
 def main(write_to_file=True):
     A = np.matrix(np.random.rand(N,N)) # NxN matrix with values in range [0,1)
     B = np.matrix(np.random.rand(N,N)) # NxN matrix with values in range [0,1)
-    save_to_file(A, "A.txt", "wb", write_to_file=write_to_file)
-    save_to_file(B, "B.txt", "wb", write_to_file=write_to_file)
+    save_to_file(A, "A.dat", "wb", write_to_file=write_to_file)
+    save_to_file(B, "B.dat", "wb", write_to_file=write_to_file)
     st = time.monotonic()
     C = A @ B # multiply A with B
     en = time.monotonic()
-    save_to_file(C, "C.txt", "wb", write_to_file=write_to_file) 
+    save_to_file(C, "C.dat", "wb", write_to_file=write_to_file) 
     exec_time = en-st
     print(f"Took {exec_time:.5f} seconds to multiply A with B")
     print(f"Number of GFLOPS: {FLOPS*1e-9/exec_time:.4f}")
