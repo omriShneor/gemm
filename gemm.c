@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-#define N 16
+#include <time.h>
+
+#define N 1024
 
 float A[N][N];
 float B[N][N];
@@ -9,9 +11,9 @@ float C[N][N];
 float EXPECTED_C[N][N];
 
 void mat_mul(float A[N][N], float B[N][N]){
-    for(int i = 0; i < N; i++){
-        for(int j = 0; j < N; j++) {
-            for(int k = 0; k < N; k++) {
+    for(int i = 0; i < N; i++) { 
+        for(int k = 0; k < N; k++) {
+            for(int j = 0; j < N; j++) {
                 C[i][j] += A[i][k]*B[k][j];
             }
         }
@@ -34,8 +36,8 @@ void load_matrix(float A[N][N], const char* filename) {
 void compare_matmul(float C[N][N], float EXPECTED_C[N][N]) {
     for(size_t i = 0; i < N; ++i){
         for(size_t j = 0; j < N; ++j){
-            if (abs(C[i][j] - EXPECTED_C[i][j] > 1e-4)){
-                printf("Matrix Multiplier FAILED at index: (%zu, %zu)", i,j);
+            if (abs(C[i][j] - EXPECTED_C[i][j] > 1e-3)){
+                printf("Matrix Multiplier FAILED at index: (%zu, %zu)\n", i,j);
                 return;
             }
         }
@@ -48,7 +50,13 @@ int main() {
     load_matrix(A, "A.dat");
     load_matrix(B, "B.dat");
     load_matrix(EXPECTED_C, "C.dat");
+    clock_t begin = clock();
     mat_mul(A, B);
-    printf("SUCCESS");
+    clock_t end = clock();
+    double GFLOP =  2.0 * N  * N * N * 1e-9;
+    double time_spent = (double) (end - begin) / CLOCKS_PER_SEC; // The result is in seconds
+    compare_matmul(C, EXPECTED_C);
+    printf("Took %f seconds to multuply A and B\n", time_spent);
+    printf("Number of GFLOP/S with matmul in C: %f\n", GFLOP/time_spent);
     return 0;
 }
