@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 N = 2 ** 10 # 16
-FLOPS = 2 * N * N * N
+FLOP = 2 * N * N * N
 
 
 def save_to_file(mat: np.array, file_name: str, premissions: str, write_to_file: bool):
@@ -34,9 +34,7 @@ def main(write_to_file=True):
     save_to_file(C, "C.dat", "wb", write_to_file=write_to_file) 
     exec_time = en-st
     print(f"Took {exec_time:.5f} seconds to multiply A with B")
-    print(f"Number of GFLOP/S with matmul in python: {FLOPS*1e-9/exec_time:.4f}")
-
-
+    print(f"Number of GFLOP/S with matmul in python: {(FLOP*1e-9)/exec_time:.4f}")
 
 
 

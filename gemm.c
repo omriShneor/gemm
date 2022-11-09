@@ -4,17 +4,24 @@
 #include <time.h>
 
 #define N 1024
+#define BLOCK 64
 
 float A[N][N];
 float B[N][N];
 float C[N][N];
 float EXPECTED_C[N][N];
 
+
+
 void mat_mul(float A[N][N], float B[N][N]){
-    for(int i = 0; i < N; i++) { 
-        for(int k = 0; k < N; k++) {
-            for(int j = 0; j < N; j++) {
-                C[i][j] += A[i][k]*B[k][j];
+    for(int bi = 0; bi < N; bi+=BLOCK){
+        for(int bj = 0; bj < N; bj += BLOCK) {
+            for(int i = bi; i < bi+BLOCK; i++) {
+                for(int k = 0; k < BLOCK; k++) {
+                    for(int j = bj;j < bj+BLOCK; j++) {
+                        C[i][j] += A[i][k]*B[k][j];
+                    }
+                }
             }
         }
     }
