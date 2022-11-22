@@ -1,7 +1,8 @@
 .vscode/
-A.txt
-B.txt
-C.txt
 gemm
 main
 main.dsYM
+A.dat
+B.dat
+C.dat
+out*
